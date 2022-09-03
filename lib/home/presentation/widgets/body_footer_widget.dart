@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../theme/theme.dart';
+import '../controllers/home_controller.dart';
 import 'button_widget.dart';
 
 class BodyFooterWidget extends StatefulWidget {
@@ -25,32 +26,32 @@ class BodyFooterWidget extends StatefulWidget {
 }
 
 class _BodyFooterWidgetState extends State<BodyFooterWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+    with TickerProviderStateMixin {
+  final HomeController _homeController = HomeController.instance;
 
   Color get _color => widget.isDarkScreen
       ? FlutterEducationTheme.secondaryColor
       : FlutterEducationTheme.primaryColor;
 
-  double _opacity = 0;
-
-  void startLinearProgressAnimation() {
-    if (widget.difficultyValue <= 0) {
-      _controller = AnimationController(vsync: this);
-      return;
-    }
-    _controller = AnimationController(
+  void _startAnimation() {
+    _homeController.linearProgressAnimationController = AnimationController(
       vsync: this,
-      upperBound: widget.difficultyValue,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 1500),
     );
-    _controller.forward();
+    _homeController.opacityAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+    _homeController.opacityAnimationController.animateTo(1);
+    _homeController.linearProgressAnimationController.animateTo(
+      widget.difficultyValue,
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    startLinearProgressAnimation();
+    _startAnimation();
   }
 
   @override
@@ -85,12 +86,14 @@ class _BodyFooterWidgetState extends State<BodyFooterWidget>
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: AnimatedBuilder(
-                          animation: _controller,
-                          builder: (context, _) {
+                          animation:
+                              _homeController.linearProgressAnimationController,
+                          builder: (_, __) {
                             return LinearProgressIndicator(
                               backgroundColor: Colors.transparent,
                               valueColor: AlwaysStoppedAnimation<Color>(_color),
-                              value: _controller.value,
+                              value: _homeController
+                                  .linearProgressAnimationController.value,
                             );
                           },
                         ),
@@ -98,18 +101,19 @@ class _BodyFooterWidgetState extends State<BodyFooterWidget>
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Focus(
-                    autofocus: true,
-                    onFocusChange: (value) => _opacity = 1,
-                    child: AnimatedOpacity(
-                      duration: const Duration(seconds: 1),
-                      opacity: _opacity,
-                      child: Text(
-                        widget.description,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.abhayaLibre(color: _color),
-                      ),
-                    ),
+                  AnimatedBuilder(
+                    animation: _homeController.opacityAnimationController,
+                    builder: (_, __) {
+                      return Opacity(
+                        opacity:
+                            _homeController.opacityAnimationController.value,
+                        child: Text(
+                          widget.description,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.abhayaLibre(color: _color),
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -120,5 +124,11 @@ class _BodyFooterWidgetState extends State<BodyFooterWidget>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _homeController.dispose();
+    super.dispose();
   }
 }

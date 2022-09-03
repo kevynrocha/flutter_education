@@ -22,7 +22,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
       ),
       child: BottomNavigationBar(
         selectedItemColor: FlutterEducationTheme.primaryColor,
-        unselectedItemColor: FlutterEducationTheme.secondaryColor,
+        unselectedItemColor: FlutterEducationTheme.primaryColor,
         backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(

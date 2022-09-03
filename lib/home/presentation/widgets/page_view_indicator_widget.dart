@@ -19,6 +19,7 @@ class PageViewIndicatorWidget extends StatelessWidget {
               final bool isActive = currentScreen == index;
               final bool isDarkScreen = currentScreen == 2;
               final double size = isActive ? 12 : 8;
+              final bool isLast = index == 2;
               final Color color = isDarkScreen ? Colors.white : Colors.black;
 
               return Row(
@@ -31,7 +32,7 @@ class PageViewIndicatorWidget extends StatelessWidget {
                       height: size,
                     ),
                   ),
-                  const SizedBox(width: 12)
+                  if (!isLast) const SizedBox(width: 12)
                 ],
               );
             },
