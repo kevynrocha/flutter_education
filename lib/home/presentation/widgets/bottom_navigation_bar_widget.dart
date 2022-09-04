@@ -13,7 +13,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: _bottomNavigationBarHeight,
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(_bottomNavigationBarRadius),
@@ -28,21 +28,21 @@ class BottomNavigationBarWidget extends StatelessWidget {
           BottomNavigationBarItem(
             label: 'My books',
             icon: SvgPicture.asset(
-              'assets/images/book.svg',
+              'assets/images/bottom_navigation_bar/book.svg',
               semanticsLabel: 'Book Icon',
             ),
           ),
           BottomNavigationBarItem(
             label: 'Discover',
             icon: SvgPicture.asset(
-              'assets/images/discover.svg',
+              'assets/images/bottom_navigation_bar/discover.svg',
               semanticsLabel: 'Planet Icon',
             ),
           ),
           BottomNavigationBarItem(
             label: 'Profile',
             icon: SvgPicture.asset(
-              'assets/images/profile.svg',
+              'assets/images/bottom_navigation_bar/profile.svg',
               semanticsLabel: 'Profile Icon',
             ),
           ),

@@ -38,17 +38,34 @@ class BodyWidget extends StatelessWidget {
                 _homeController.opacityAnimationController.animateTo(1);
                 _currentScreen = index;
               },
-              itemBuilder: (context, index) => Container(
-                color:
-                    TweenSequence(_homeController.tweenSequenceItems).evaluate(
-                  AlwaysStoppedAnimation(color),
-                ),
-                child: BodyContentWidget(
-                  imagePath: children[index].imagePath,
-                ),
+              itemBuilder: (context, index) => Stack(
+                children: [
+                  Container(
+                    color: TweenSequence(_homeController.tweenSequenceItems)
+                        .evaluate(
+                      AlwaysStoppedAnimation(color),
+                    ),
+                    child: BodyContentWidget(
+                      imagePath: children[index].imagePath,
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 0,
+                    child: Container(
+                      color: Colors.red,
+                      width: 20,
+                      height: 20,
+                    ),
+                  )
+                ],
               ),
             ),
-            PageViewIndicatorWidget(currentScreen: _currentScreen),
+            PageViewIndicatorWidget(
+              currentScreen: _currentScreen,
+              totalScreens: children.length,
+              isDarkScreen: currentItem.isDarkScreen,
+            ),
             BodyFooterWidget(
               description: currentItem.description,
               isDarkScreen: currentItem.isDarkScreen,

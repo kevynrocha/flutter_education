@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class PageViewIndicatorWidget extends StatelessWidget {
-  const PageViewIndicatorWidget({Key? key, required this.currentScreen})
-      : super(key: key);
+  const PageViewIndicatorWidget({
+    Key? key,
+    required this.totalScreens,
+    required this.isDarkScreen,
+    required this.currentScreen,
+  }) : super(key: key);
 
+  final int totalScreens;
   final int currentScreen;
+  final bool isDarkScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +20,11 @@ class PageViewIndicatorWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ...List.generate(
-            3,
+            totalScreens,
             (index) {
               final bool isActive = currentScreen == index;
-              final bool isDarkScreen = currentScreen == 2;
               final double size = isActive ? 12 : 8;
-              final bool isLast = index == 2;
+              final bool isLast = index == totalScreens - 1;
               final Color color = isDarkScreen ? Colors.white : Colors.black;
 
               return Row(
