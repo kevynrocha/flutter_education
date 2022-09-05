@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/theme.dart';
 
-class HomeController extends ValueNotifier<double> {
+class HomeController {
   static HomeController instance = HomeController._();
 
-  HomeController._() : super(0);
+  HomeController._();
 
   late AnimationController linearProgressAnimationController;
   late AnimationController opacityAnimationController;
@@ -34,10 +34,8 @@ class HomeController extends ValueNotifier<double> {
         ),
       ];
 
-  @override
   void dispose() {
     linearProgressAnimationController.dispose();
     opacityAnimationController.dispose();
-    super.dispose();
   }
 }
