@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_education/home/presentation/controllers/home_controller.dart';
-import 'package:flutter_education/home/presentation/screens/test_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../controllers/home_controller.dart';
 import '../models/body_content_ui_model.dart';
 import 'widgets.dart';
 
@@ -47,7 +45,7 @@ class BodyWidget extends StatelessWidget {
             totalScreens: children.length,
             isDarkScreen: currentItem.isDarkScreen,
           ),
-          AnimatedItems(factor: _factor),
+          AnimatedItemsWidget(factor: _factor),
           BodyFooterWidget(
             description: currentItem.description,
             isDarkScreen: currentItem.isDarkScreen,
@@ -58,7 +56,7 @@ class BodyWidget extends StatelessWidget {
     );
   }
 
-  _onPageChanged(int index) {
+  void _onPageChanged(int index) {
     _homeController.linearProgressAnimationController.animateTo(
       children[index].difficultyValue,
     );
@@ -73,85 +71,5 @@ class BodyWidget extends StatelessWidget {
     } catch (_) {
       return 0;
     }
-  }
-}
-
-class AnimatedItemsBodyWidget extends StatefulWidget {
-  const AnimatedItemsBodyWidget({Key? key}) : super(key: key);
-
-  @override
-  State<AnimatedItemsBodyWidget> createState() =>
-      _AnimatedItemsBodyWidgetState();
-}
-
-class _AnimatedItemsBodyWidgetState extends State<AnimatedItemsBodyWidget>
-    with SingleTickerProviderStateMixin {
-  final HomeController _homeController = HomeController.instance;
-
-  List<TweenSequenceItem<double?>> get tweenSequenceItems => [
-        TweenSequenceItem(
-          tween: Tween(
-            begin: 0,
-            end: -100,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem(
-          tween: Tween(
-            begin: 0,
-            end: -100,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem(
-          tween: Tween(
-            begin: 0,
-            end: -100,
-          ),
-          weight: 1,
-        ),
-      ];
-
-  @override
-  void initState() {
-    super.initState();
-    // _homeController.positionAnimationController = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(milliseconds: 300),
-    // );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      top: 0,
-      left: TweenSequence(tweenSequenceItems).evaluate(
-        const AlwaysStoppedAnimation(0),
-      ),
-      child: IgnorePointer(
-        child: SvgPicture.asset(
-          'assets/images/plant/animated_plant_left.svg',
-          width: 100,
-        ),
-      ),
-    );
-    // return AnimatedBuilder(
-    //   animation: _homeController.positionAnimationController,
-    //   builder: (_, __) {
-    //     return Positioned(
-    //       bottom: 0,
-    //       top: 0,
-    //       left: TweenSequence(tweenSequenceItems)
-    //           .evaluate(const AlwaysStoppedAnimation(1)),
-    //       child: IgnorePointer(
-    //         child: SvgPicture.asset(
-    //           'assets/images/plant/animated_plant_left.svg',
-    //           width: 100,
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
   }
 }

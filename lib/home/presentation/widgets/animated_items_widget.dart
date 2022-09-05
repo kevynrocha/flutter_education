@@ -1,60 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class TestScreen extends StatelessWidget {
-  TestScreen({super.key});
-
-  final PageController _pageController = PageController();
-
-  final _tweenSequence = TweenSequence<Color?>([
-    TweenSequenceItem(
-      tween: ColorTween(begin: Colors.amber, end: Colors.indigo),
-      weight: 1,
-    ),
-    TweenSequenceItem(
-      tween: ColorTween(begin: Colors.indigo, end: Colors.red),
-      weight: 1,
-    ),
-    TweenSequenceItem(
-      tween: ColorTween(begin: Colors.red, end: Colors.red),
-      weight: 1,
-    ),
-  ]);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnimatedBuilder(
-        animation: _pageController,
-        builder: (_, __) => Stack(
-          children: [
-            PageView.builder(
-              controller: _pageController,
-              itemCount: 3,
-              itemBuilder: (_, __) => Container(
-                color: _tweenSequence.evaluate(
-                  AlwaysStoppedAnimation(_factor),
-                ),
-              ),
-            ),
-            AnimatedItems(factor: _factor),
-          ],
-        ),
-      ),
-    );
-  }
-
-  double get _factor {
-    try {
-      return _pageController.page! / 3;
-    } catch (_) {
-      return 0;
-    }
-  }
-}
-
-class AnimatedItems extends StatelessWidget {
-  const AnimatedItems({super.key, required this.factor});
+class AnimatedItemsWidget extends StatelessWidget {
+  const AnimatedItemsWidget({super.key, required this.factor});
 
   final double factor;
 
@@ -63,35 +11,35 @@ class AnimatedItems extends StatelessWidget {
     return IgnorePointer(
       child: Stack(
         children: [
-          PlantAnimatedItems(factor: factor),
-          VegetableAnimatedItems(factor: factor),
-          PlanetAnimatedItems(factor: factor),
+          _PlantAnimatedItems(factor: factor),
+          _VegetableAnimatedItems(factor: factor),
+          _PlanetAnimatedItems(factor: factor),
         ],
       ),
     );
   }
 }
 
-class PlantAnimatedItems extends StatelessWidget {
-  static const double _size2 = 50;
-  static const double _size4 = 60;
-  static const double _size1 = 70;
-  static const double _size3 = 150;
-  static const double _size5 = 100;
-  static const double _size6 = 250;
+class _PlantAnimatedItems extends StatelessWidget {
+  static const double _size01 = 50;
+  static const double _size02 = 60;
+  static const double _size03 = 70;
+  static const double _size04 = 100;
+  static const double _size05 = 150;
+  static const double _size06 = 250;
 
-  PlantAnimatedItems({super.key, required this.factor});
+  _PlantAnimatedItems({required this.factor});
 
   final double factor;
 
-  final _tween2 = Tween<double>(begin: 80, end: -_size1);
-  final _tween3 = Tween<double>(begin: 0, end: -_size2);
-  final _tween4 = Tween<double>(begin: 0, end: -_size3);
-  final _tween5 = Tween<double>(begin: 80, end: -_size3);
-  final _tween6 = Tween<double>(begin: 30, end: -_size3);
-  final _tween8 = Tween<double>(begin: 0, end: -_size5);
+  final _tween1 = EdgeInsetsTween(
+    begin: const EdgeInsets.only(left: 120, top: 80),
+    end: const EdgeInsets.only(left: -70, top: -50),
+  );
 
-  final _tween7 = TweenSequence<double>([
+  final _tween2 = Tween<double>(begin: 0, end: -_size04);
+
+  final _tween3 = TweenSequence<double>([
     TweenSequenceItem(
       tween: Tween(begin: -80, end: 0),
       weight: 1,
@@ -101,77 +49,102 @@ class PlantAnimatedItems extends StatelessWidget {
       weight: 1,
     ),
     TweenSequenceItem(
-      tween: Tween(begin: 0, end: -_size6),
+      tween: Tween(begin: 0, end: -_size06),
       weight: 1,
     ),
   ]);
+
+  final _tween4 = EdgeInsetsTween(
+    begin: const EdgeInsets.only(right: _size03, top: 360),
+    end: const EdgeInsets.only(right: -_size03, top: 300),
+  );
+
+  final _tween5 = EdgeInsetsTween(
+    begin: const EdgeInsets.only(right: 0, bottom: 320),
+    end: const EdgeInsets.only(right: -_size01, bottom: 200),
+  );
+
+  final _tween6 = EdgeInsetsTween(
+    begin: const EdgeInsets.only(right: 0, top: 80),
+    end: const EdgeInsets.only(right: -_size05, top: 0),
+  );
+
+  final _tween7 = EdgeInsetsTween(
+    begin: const EdgeInsets.only(left: 30, top: 180),
+    end: const EdgeInsets.only(left: 60, top: -_size03),
+  );
+
+  final _tween8 = EdgeInsetsTween(
+    begin: const EdgeInsets.only(left: 30, top: 80),
+    end: const EdgeInsets.only(left: -_size05, top: 0),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Positioned(
-          left: _tween7.evaluate(AlwaysStoppedAnimation(factor * 3 / 2)),
+          left: _tween3.evaluate(AlwaysStoppedAnimation(factor * 3 / 2)),
           bottom: 200,
           child: SvgPicture.asset(
             'assets/images/plant/animated_plant_7.svg',
-            width: _size6,
+            width: _size06,
           ),
         ),
         Positioned(
-          left: _tween8.evaluate(AlwaysStoppedAnimation(factor * 3)),
+          left: _tween2.evaluate(AlwaysStoppedAnimation(factor * 3)),
           bottom: 300,
           child: SvgPicture.asset(
             'assets/images/plant/animated_plant_1.svg',
-            width: _size5,
+            width: _size04,
           ),
         ),
         Positioned(
-          right: _tween2.evaluate(AlwaysStoppedAnimation(factor * 3)),
-          bottom: 320,
+          right: _tween4.evaluate(AlwaysStoppedAnimation(factor * 3)).right,
+          top: _tween4.evaluate(AlwaysStoppedAnimation(factor * 3)).top,
           child: SvgPicture.asset(
             'assets/images/plant/animated_plant_2.svg',
-            width: _size1,
+            width: _size03,
           ),
         ),
         Positioned(
-          right: _tween3.evaluate(AlwaysStoppedAnimation(factor * 3)),
-          bottom: 320,
+          right: _tween5.evaluate(AlwaysStoppedAnimation(factor * 3)).right,
+          bottom: _tween5.evaluate(AlwaysStoppedAnimation(factor * 3)).bottom,
           child: SvgPicture.asset(
             'assets/images/plant/animated_plant_3.svg',
-            width: _size2,
+            width: _size01,
           ),
         ),
         Positioned(
-          right: _tween4.evaluate(AlwaysStoppedAnimation(factor * 3)),
-          top: 80,
+          right: _tween6.evaluate(AlwaysStoppedAnimation(factor * 3)).right,
+          top: _tween6.evaluate(AlwaysStoppedAnimation(factor * 3)).top,
           child: SvgPicture.asset(
             'assets/images/plant/animated_plant_4.svg',
-            width: _size3,
+            width: _size05,
           ),
         ),
         Positioned(
-          left: 120,
-          top: _tween5.evaluate(AlwaysStoppedAnimation(factor * 3)),
+          left: _tween1.evaluate(AlwaysStoppedAnimation(factor * 3)).left,
+          top: _tween1.evaluate(AlwaysStoppedAnimation(factor * 3)).top,
           child: SvgPicture.asset(
             'assets/images/plant/animated_plant_5.svg',
-            width: _size1,
+            width: _size03,
           ),
         ),
         Positioned(
-          left: _tween6.evaluate(AlwaysStoppedAnimation(factor * 3)),
-          top: 180,
+          left: _tween7.evaluate(AlwaysStoppedAnimation(factor * 3)).left,
+          top: _tween7.evaluate(AlwaysStoppedAnimation(factor * 3)).top,
           child: SvgPicture.asset(
             'assets/images/plant/animated_plant_6.svg',
-            width: _size4,
+            height: _size03,
           ),
         ),
         Positioned(
-          left: _tween6.evaluate(AlwaysStoppedAnimation(factor * 3)),
-          top: 80,
+          left: _tween8.evaluate(AlwaysStoppedAnimation(factor * 3)).left,
+          top: _tween8.evaluate(AlwaysStoppedAnimation(factor * 3)).top,
           child: SvgPicture.asset(
             'assets/images/plant/animated_plant_8.svg',
-            width: _size4,
+            width: _size02,
           ),
         ),
       ],
@@ -179,10 +152,10 @@ class PlantAnimatedItems extends StatelessWidget {
   }
 }
 
-class VegetableAnimatedItems extends StatelessWidget {
+class _VegetableAnimatedItems extends StatelessWidget {
   static const double _size = 50;
 
-  VegetableAnimatedItems({super.key, required this.factor});
+  _VegetableAnimatedItems({required this.factor});
 
   final _tween1 = TweenSequence<double>([
     TweenSequenceItem(
@@ -234,10 +207,10 @@ class VegetableAnimatedItems extends StatelessWidget {
   }
 }
 
-class PlanetAnimatedItems extends StatelessWidget {
+class _PlanetAnimatedItems extends StatelessWidget {
   static const double _size = 200;
 
-  PlanetAnimatedItems({super.key, required this.factor});
+  _PlanetAnimatedItems({required this.factor});
 
   final _tween = TweenSequence<double>([
     TweenSequenceItem(
