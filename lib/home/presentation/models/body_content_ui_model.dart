@@ -6,8 +6,8 @@ class BodyContentUiModel {
     this.isDarkScreen = false,
   });
 
-  final String description;
   final String imagePath;
   final bool isDarkScreen;
+  final String description;
   final double difficultyValue;
 }
