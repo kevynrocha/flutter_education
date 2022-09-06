@@ -1,6 +1,6 @@
 
 <h1 align="center">
-    <img alt="App Logo" title="Flutter Education" src="https://user-images.githubusercontent.com/55221835/188546934-a7f2ccd1-0db9-40cd-9ebd-013143319dec.png" width="220px" />
+    <img alt="App Logo" title="Flutter Education" src="https://user-images.githubusercontent.com/55221835/188549804-d91660bc-dc37-4bfe-b15b-8fa858a80465.gif" width="20%" />
 </h1>
 
 <p align="center">
