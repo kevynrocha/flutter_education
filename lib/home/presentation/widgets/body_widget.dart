@@ -25,6 +25,7 @@ class BodyWidget extends StatelessWidget {
           PageView.builder(
             itemCount: _homeController.tweenSequenceItems.length,
             controller: _pageController,
+            physics: const ClampingScrollPhysics(),
             onPageChanged: _onPageChanged,
             itemBuilder: (context, index) => Stack(
               children: [

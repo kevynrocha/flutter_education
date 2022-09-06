@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../theme/theme.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
-  static const double _bottomNavigationBarHeight = 90;
   static const double _bottomNavigationBarRadius = 25;
 
   const BottomNavigationBarWidget({Key? key}) : super(key: key);
@@ -12,7 +11,6 @@ class BottomNavigationBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: _bottomNavigationBarHeight,
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
